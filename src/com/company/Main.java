@@ -14,7 +14,7 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
         Set<Integer>[] adj = new HashSet[size];
         for(int i=0;i<size;i++){
-            adj[i]=new HashSet<Integer>();
+            adj[i]=new HashSet<>();
         }
 
         int Capacity[][] = new int[size][size];
@@ -26,18 +26,18 @@ public class Main {
                 Capacity[i][a+1000] = 1;
                 Capacity[a+1000][i] = 0;
                 adj[i].add(a+1000);
-                adj[a+1000].add(i);
+//                adj[a+1000].add(i);
             }
             Capacity[0][i] = 2;
             Capacity[i][0] = 0;
-            adj[i].add(0);
+//            adj[i].add(0);
             adj[0].add(i);
         }
         for(int i=1 ; i <= m; i++){
             Capacity[2001][i+1000]=0;
             Capacity[i+1000][2001]=1;
             adj[i+1000].add(2001);
-            adj[2001].add(i+1000);
+//            adj[2001].add(i+1000);
         }
 
         // end of input
@@ -59,9 +59,10 @@ public class Main {
             dq.add(start); parent[start] = start;
             while(!dq.isEmpty() && parent[end] == -1) {
                 int now = dq.poll();
-//                Iterator<Integer> iter = adj[now].iterator();
-                for(int i=0;i<size;i++) {
-//                    int i = iter.next();
+                Iterator<Integer> iter = adj[now].iterator();
+//                for(int i=0;i<size;i++) {
+                while(iter.hasNext()){
+                    int i = iter.next();
                     if(capacity[now][i]-flow[now][i]>0 && parent[i]== -1) {
                         // 연결되어서 유량을 보낼수 있는 경우
                         // 경로가 결정되지 않았을 경우
